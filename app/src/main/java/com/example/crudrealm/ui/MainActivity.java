@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText nombreEt, emailEt;
     private Button btnGuardar;
+    private Button btnListado;
     private Profesor profesor;
     private Realm realm;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         nombreEt = findViewById(R.id.mainActivityEtNombre);
         emailEt = findViewById(R.id.mainActivityEtEmail);
         btnGuardar = findViewById(R.id.mainActivityBtnSave);
+        btnListado = findViewById(R.id.mainActivityBtnListar);
 
         //Listener para guardar
         btnGuardar.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
                 profesor.setName(nombreEt.getText().toString());
                 profesor.setEmail(emailEt.getText().toString());
                 CRUDProfesor.addProfesor(profesor);
+            }
+        });
+
+        //Listener para listar los profesores
+        btnListado.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                CRUDProfesor.getAllProfesor();
             }
         });
     }

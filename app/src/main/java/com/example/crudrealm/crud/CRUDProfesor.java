@@ -1,8 +1,13 @@
 package com.example.crudrealm.crud;
 
+import android.util.Log;
+
 import com.example.crudrealm.model.Profesor;
 
+import java.util.List;
+
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class CRUDProfesor {
 
@@ -41,5 +46,22 @@ public class CRUDProfesor {
                 realmProfesor.setEmail(profesor.getEmail());
             }
         });
+    }
+
+    /**Listado de todos los profesores*/
+    public static final List<Profesor> getAllProfesor(){
+        //Como siempre obtenemos la instancia de Realm
+        Realm realm = Realm.getDefaultInstance();
+
+        //Con esta línea le dedimos a Realm que queremos todos los regitros de Profesor
+        RealmResults<Profesor> profesors = realm.where(Profesor.class).findAll();
+
+        //Lo recorremos para mostrarlo en un Log y ver que funciona
+        for(Profesor profesor: profesors){
+            Log.d("ITEM", "Id: " + profesor.getId() + " Name: "
+            + profesor.getName() + " Email: " + profesor.getEmail());
+        }
+        //En realidad devolvemos esto para montarlo en una Activity con un ListView o un ReciclerView
+        return profesors;
     }
 }
