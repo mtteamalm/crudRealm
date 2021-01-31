@@ -31,4 +31,10 @@
         android:layout_height="wrap_content"
         android:text="Listado" />
 
+    <Button
+        android:id="@+id/mainActivityBtnSearchName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buscar por nombre" />
+
 </LinearLayout>

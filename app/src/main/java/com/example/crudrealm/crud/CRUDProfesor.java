@@ -64,4 +64,23 @@ public class CRUDProfesor {
         //En realidad devolvemos esto para montarlo en una Activity con un ListView o un ReciclerView
         return profesors;
     }
+
+    /** Obtener Profesor por nombre*/
+    public static final Profesor getProfesorByName(String name){
+        //Como siempre obtenemos la instancia de Realm
+        Realm realm = Realm.getDefaultInstance();
+
+        //Usamos de Real where, equalto y findFirst para obtener la primera ocurrencia en nuestra BBDD
+        Profesor profesor = realm.where(Profesor.class).equalTo("name", name).findFirst();
+
+        if(profesor != null){
+            //Lo mostramos en el Log
+            Log.d("BUSCAR_NOMBRE", "Id: " + profesor.getId() + " Name: "
+                    + profesor.getName() + " Email: " + profesor.getEmail());
+        }else{
+            Log.d("BUSCAR_NOMBRE", "No existe ningún profesor con ese nombre");
+        }
+
+        return profesor;
+    }
 }
