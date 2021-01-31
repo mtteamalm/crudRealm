@@ -3,9 +3,11 @@ package com.example.crudrealm.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.crudrealm.R;
 import com.example.crudrealm.crud.CRUDProfesor;
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnGuardar;
     private Button btnListado;
     private Button btnSearchName;
+    private EditText searchIdEt;
+    private Button btnSearchId;
     private Profesor profesor;
     private Realm realm;
 
@@ -37,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         btnGuardar = findViewById(R.id.mainActivityBtnSave);
         btnListado = findViewById(R.id.mainActivityBtnListar);
         btnSearchName = findViewById(R.id.mainActivityBtnSearchName);
+        searchIdEt = findViewById(R.id.mainActivityEtSearchId);
+        btnSearchId = findViewById(R.id.mainActivityBtnSearchId);
 
         //Listener para guardar
         btnGuardar.setOnClickListener(new View.OnClickListener() {
@@ -65,5 +71,19 @@ public class MainActivity extends AppCompatActivity {
                 CRUDProfesor.getProfesorByName(nombreEt.getText().toString());
             }
         });
+
+        //Listener para buscar profesor por Id
+        btnSearchId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(searchIdEt.getText().toString() == ""){
+                    Toast.makeText(MainActivity.this, "Debes indicar un número de Id para buscar",
+                            Toast.LENGTH_SHORT).show();
+                }else{
+                    CRUDProfesor.getProfesorById(Integer.parseInt(searchIdEt.getText().toString()));
+                }
+            }
+        });
+
     }
 }

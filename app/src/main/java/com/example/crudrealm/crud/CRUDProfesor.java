@@ -83,4 +83,23 @@ public class CRUDProfesor {
 
         return profesor;
     }
+
+    /**Obtener Profesor por su ID*/
+    public static final Profesor getProfesorById(Integer id){
+        //Como siempre obtenemos la instancia de Realm
+        Realm realm = Realm.getDefaultInstance();
+
+        //Usamos de Real where, equalto y findFirst para obtener la primera ocurrencia en nuestra BBDD
+        Profesor profesor = realm.where(Profesor.class).equalTo("id", id).findFirst();
+
+        if(profesor != null){
+            //Lo mostramos en el Log
+            Log.d("BUSCAR_ID", "Id: " + profesor.getId() + " Name: "
+                    + profesor.getName() + " Email: " + profesor.getEmail());
+        }else{
+            Log.d("BUSCAR_ID", "No existe ningún profesor con ese Id");
+        }
+
+        return profesor;
+    }
 }

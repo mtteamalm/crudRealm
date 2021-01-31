@@ -9,32 +9,69 @@
 
     <EditText
         android:id="@+id/mainActivityEtNombre"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nombre" />
 
     <EditText
         android:id="@+id/mainActivityEtEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email" />
 
-    <Button
-        android:id="@+id/mainActivityBtnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guardar" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/mainActivityBtnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Guardar" />
 
-    <Button
-        android:id="@+id/mainActivityBtnListar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Listado" />
+        <Button
+            android:id="@+id/mainActivityBtnListar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Listado" />
 
-    <Button
-        android:id="@+id/mainActivityBtnSearchName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Buscar por nombre" />
+        <Button
+            android:id="@+id/mainActivityBtnSearchName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Busc. por nombre" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/mainActivityEtSearchId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Id de Profesor"
+            android:text="0"
+            android:layout_marginLeft="15dp"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/mainActivityBtnSearchId"
+            android:layout_width="190dp"
+            android:layout_height="43dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="39dp"
+            android:layout_marginEnd="62dp"
+            android:layout_toEndOf="@+id/mainActivityEtSearchId"
+            android:text="Buscar Id" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>
