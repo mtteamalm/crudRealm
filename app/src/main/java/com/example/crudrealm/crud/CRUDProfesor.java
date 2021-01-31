@@ -102,4 +102,24 @@ public class CRUDProfesor {
 
         return profesor;
     }
+
+    /**Actualizar información de profesor por Id*/
+    public final static void updateProfesorById(int id, String name, String email){
+        //Como siempre obtenemos la instancia de Realm
+        Realm realm = Realm.getDefaultInstance();
+
+        //Esta es otra manera de hacer la transacción de lectura/escritura la
+        //otra forma la vimos en la creación de profesores.
+        realm.beginTransaction();
+        Profesor profesor = realm.where(Profesor.class).equalTo("id", id).findFirst();
+        //Asignamos los valores que traemos de profesor
+        profesor.setName(name);
+        profesor.setEmail(email);
+        realm.insertOrUpdate(profesor);
+        realm.commitTransaction();
+
+        //Mostramos info en el Log para comprobar resultado
+        Log.d("UPDATE", "Id: " + profesor.getId() + " Name: "
+                + profesor.getName() + " Email: " + profesor.getEmail());
+    }
 }

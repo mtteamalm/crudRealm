@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnSearchName;
     private EditText searchIdEt;
     private Button btnSearchId;
+    private Button btnUpdateProfesor;
     private Profesor profesor;
     private Realm realm;
 
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         btnSearchName = findViewById(R.id.mainActivityBtnSearchName);
         searchIdEt = findViewById(R.id.mainActivityEtSearchId);
         btnSearchId = findViewById(R.id.mainActivityBtnSearchId);
+        btnUpdateProfesor = findViewById(R.id.mainActivityBtnUpdate);
+
 
         //Listener para guardar
         btnGuardar.setOnClickListener(new View.OnClickListener() {
@@ -85,5 +88,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Listener para actualizar información de profesor
+        btnUpdateProfesor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String name = nombreEt.getText().toString();
+                String email = emailEt.getText().toString();
+
+                if(name == "" || email == ""){
+                    Toast.makeText(MainActivity.this,
+                            "ERROR: Revisa los campos nombre e Email",
+                            Toast.LENGTH_SHORT).show();
+                }else{
+                    int id = Integer.parseInt(searchIdEt.getText().toString());
+                    CRUDProfesor.updateProfesorById(id, name, email);
+                    Toast.makeText(MainActivity.this,
+                            "Profesor actualizado correctamente",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
