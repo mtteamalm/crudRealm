@@ -60,6 +60,18 @@ public class CRUDProfesor {
         for(Profesor profesor: profesors){
             Log.d("ITEM", "Id: " + profesor.getId() + " Name: "
             + profesor.getName() + " Email: " + profesor.getEmail());
+
+            //Añadimos nueva funcionalidad para que muestre listado de cursos que tiene asociados
+            if(profesor.getCursos().size() > 0){
+
+                for(int i=0; i<profesor.getCursos().size(); i++){
+                    Log.d("CURSOS_PROFESOR", "Nombre_curso: "
+                            + profesor.getCursos().get(i).getName() + " Duración: " +
+                            profesor.getCursos().get(i).getDuration());
+                }
+            }else{
+                Log.d("CURSOS_PROFESOR", "Sin cursos asociados");
+            }
         }
         //En realidad devolvemos esto para montarlo en una Activity con un ListView o un ReciclerView
         return profesors;
@@ -122,4 +134,59 @@ public class CRUDProfesor {
         Log.d("UPDATE", "Id: " + profesor.getId() + " Name: "
                 + profesor.getName() + " Email: " + profesor.getEmail());
     }
+
+    /**Borrar profesor por Id*/
+    public final static void deleteProfesorById(int id){
+        //Como siempre obtenemos la instancia de Realm
+        Realm realm = Realm.getDefaultInstance();
+        //Volvemos al método de transacción que vimos incialmente
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Profesor profesor = realm.where(Profesor.class)
+                        .equalTo("id", id)
+                        .findFirst();
+                //Método que permite el borrado
+                profesor.deleteFromRealm();
+            }
+        });
+    }
+
+    /**Borrar profesor por Nombre*/
+    public static final void deleteProfesorByName(String name){
+        //Como siempre obtenemos la instancia de Realm
+        Realm realm = Realm.getDefaultInstance();
+        //Volvemos al método de transacción que vimos incialmente
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Profesor profesor = realm.where(Profesor.class)
+                        .equalTo("name", name)
+                        .findFirst();
+                if(profesor != null){
+                    //Método que permite el borrado
+                    profesor.deleteFromRealm();
+                    //Lo mostramos en el Log
+                    Log.d("BORRAR_BY_NAME", "Profesor con nombre " + name + " eliminado");
+                }else{
+                    Log.d("BORRAR_BY_NAME", "No existe ningún profesor con ese Nombre");
+                }
+
+            }
+        });
+    }
+
+    /**Borrado de todos los registros de la clase Profesor*/
+    public static final void deleteAllProfesor(){
+        //Como siempre obtenemos la instancia de Realm
+        Realm realm = Realm.getDefaultInstance();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.deleteAll();
+            }
+        });
+    }
+
 }

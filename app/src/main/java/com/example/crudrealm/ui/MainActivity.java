@@ -2,6 +2,7 @@ package com.example.crudrealm.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText searchIdEt;
     private Button btnSearchId;
     private Button btnUpdateProfesor;
+    private Button btnDeleteId, btnDeleteName;
+    private Button btnCursosProfesor;
     private Profesor profesor;
     private Realm realm;
 
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         searchIdEt = findViewById(R.id.mainActivityEtSearchId);
         btnSearchId = findViewById(R.id.mainActivityBtnSearchId);
         btnUpdateProfesor = findViewById(R.id.mainActivityBtnUpdate);
+        btnDeleteId = findViewById(R.id.mainActivityBtnDeleteId);
+        btnDeleteName = findViewById(R.id.mainActivityBtnDeleteName);
+        btnCursosProfesor = findViewById(R.id.mainActivityBtnCursosActivity);
 
 
         //Listener para guardar
@@ -71,7 +77,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                CRUDProfesor.getProfesorByName(nombreEt.getText().toString());
+                Profesor activityProfesor =  CRUDProfesor.getProfesorByName(nombreEt.getText().toString());
+                if(activityProfesor != null){
+
+                    emailEt.setText(activityProfesor.getEmail());
+                }else{
+                    Toast.makeText(MainActivity.this, "ERROR: No existe ningún profesor con ese nombre"
+                            , Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -83,7 +96,14 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Debes indicar un número de Id para buscar",
                             Toast.LENGTH_SHORT).show();
                 }else{
-                    CRUDProfesor.getProfesorById(Integer.parseInt(searchIdEt.getText().toString()));
+                    Profesor activityProfesor = CRUDProfesor.getProfesorById(Integer.parseInt(searchIdEt.getText().toString()));
+                    if(activityProfesor != null){
+                        nombreEt.setText(activityProfesor.getName());
+                        emailEt.setText(activityProfesor.getEmail());
+                    }else {
+                        Toast.makeText(MainActivity.this, "ERROR: No existe ningún profesor con ese Id"
+                                , Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -107,6 +127,36 @@ public class MainActivity extends AppCompatActivity {
                             "Profesor actualizado correctamente",
                             Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        //Listener para borrado de profesor por ID
+        btnDeleteId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = Integer.parseInt(searchIdEt.getText().toString());
+                CRUDProfesor.deleteProfesorById(id);
+                Toast.makeText(MainActivity.this,
+                        "Profesor eliminado correctamente",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Listener para borrado de profesor por Nombre
+        btnDeleteName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = nombreEt.getText().toString();
+                CRUDProfesor.deleteProfesorByName(name);
+            }
+        });
+
+        //Listener para ir a la actividad de Cursos
+        btnCursosProfesor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Mediante un Intent hacemos la llamada a nuestra activity
+                startActivity(new Intent(getApplicationContext(), CursoActivity.class));
             }
         });
     }
