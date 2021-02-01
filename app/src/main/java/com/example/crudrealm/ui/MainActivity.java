@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnDeleteId, btnDeleteName;
     private Button btnCursosProfesor;
     private Profesor profesor;
+    private CheckBox miIngrediente;
     private Realm realm;
 
     @Override
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         btnDeleteId = findViewById(R.id.mainActivityBtnDeleteId);
         btnDeleteName = findViewById(R.id.mainActivityBtnDeleteName);
         btnCursosProfesor = findViewById(R.id.mainActivityBtnCursosActivity);
+        miIngrediente = findViewById(R.id.mainActivityChkIngrediente);
 
 
         //Listener para guardar
@@ -157,6 +161,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Mediante un Intent hacemos la llamada a nuestra activity
                 startActivity(new Intent(getApplicationContext(), CursoActivity.class));
+            }
+        });
+
+        //Listener del Checkbox
+        miIngrediente.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isChecked()){
+                    Profesor activityProfesor = CRUDProfesor.getProfesorById(Integer.parseInt(searchIdEt.getText().toString()));
+                    if(activityProfesor != null){
+                        nombreEt.setText(activityProfesor.getName());
+                        emailEt.setText(activityProfesor.getEmail());
+                    }else {
+                        Toast.makeText(MainActivity.this, "ERROR: No existe ningún profesor con ese Id"
+                                , Toast.LENGTH_SHORT).show();
+                    }
+                    //Toast.makeText(MainActivity.this, "Me acabas de clickar", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Estoy desmarcado", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
